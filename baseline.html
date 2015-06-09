@@ -7,6 +7,7 @@
     .wrapper {
     }
     .baseline-plot {
+      margin-bottom: 10px;
       height: 80px;
       width: 430px;
       background-color: lightgray;
@@ -26,15 +27,21 @@
 <body>
   <div class="wrapper">
     <center>
-      <h1>Baseline</h1>
+      <div class="baseline-plot">
+        <svg></svg>
+      </div>
       <label>Baseline</label>
       <input type="number" class="baseline-value"></input>
       <label>Current</label>
       <input type="number" class="current-value"></input><br/>
-      <button id="update" onclick="updateChart()">Update</button>
-      <div class="baseline-plot">
-        <svg></svg>
-      </div>
+      <span>Click here to update --></span><button id="update" onclick="updateChart()">Update</button>
+      <h1>Baseline Plot</h1>
+      <p>
+        This is a mockup of the baseline plot part of the KPI widget. <br/>
+        It all completely new from the ground up, so feel free to play around
+        with it and <a href="https://perceivant.atlassian.net/browse/PER-11249180">give me feedback.</a> <br/>
+        It is sized pretty close to the size it will be in the widget.
+      </p>
     </center>
   </div>
 </body>
