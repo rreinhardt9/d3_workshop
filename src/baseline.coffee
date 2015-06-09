@@ -1,13 +1,25 @@
 $ ->
+  data = {current: 120, baseline: 68}
+  $(".baseline-value").val(data.baseline)
+  $(".current-value").val(data.current)
+  draw(".baseline-plot svg", data)
+
+draw = (container, data) ->
   model = new Baseline
   chart = model.build()
 
-  data = {current: 120, baseline: 68}
 
-  d3.select(".baseline-plot svg")
+  $(container).empty()
+  d3.select(container)
     .datum(data)
     .transition()
-    .duration(1000).call chart
+    .duration(500).call chart
+
+@updateChart = ->
+  baselineVal = parseInt($(".baseline-value").val())
+  currentVal = parseInt($(".current-value").val())
+  data = {current: currentVal, baseline: baselineVal}
+  draw(".baseline-plot svg", data)
 
 class Baseline
 
@@ -26,13 +38,13 @@ class Baseline
 
         fontSize = 12
         tickFontSize = fontSize / 1.2
-        tickFormat = d3.format(',.2r')
+        tickFormat = d3.format('.0f')
         paddedText = fontSize + 5
         linesHeight = availableHeight - paddedText
-        baseline = tickFormat(d.baseline)
+        baseline = d.baseline
         max = baseline * 2
         forceX = [0]
-        current = tickFormat(d.current)
+        current = d.current
         scaleDomain = ->
           # No values should be closer than 10% to the min/max on scale
           initDomain = d3.extent(d3.merge([[max, current], forceX]))
@@ -49,7 +61,7 @@ class Baseline
           d3.extent(d3.merge([initDomain, adjustments]))
 
         xScale = d3.scale.linear()
-          .domain([tickFormat(scaleDomain()[0]), tickFormat(scaleDomain()[1])])
+          .domain(scaleDomain())
           .range([0, availableWidth])
 
         xScope = xScale.domain()[1] - xScale.domain()[0]
@@ -160,14 +172,14 @@ class Baseline
             y: availableHeight - margin.bottom
             "font-size": fontSize
           })
-          .text(xScale.domain()[1])
+          .text(tickFormat(xScale.domain()[1]))
 
         gMin.append("text").attr({
             "text-anchor": "middle"
             y: availableHeight - margin.bottom
             "font-size": fontSize
           })
-          .text(xScale.domain()[0])
+          .text(tickFormat(xScale.domain()[0]))
 
         # Transition indicators on load
         gBaseline

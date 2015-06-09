@@ -25,10 +25,17 @@
 </head>
 <body>
   <div class="wrapper">
-    <center><h1>Baseline</h1></center>
-    <div class="baseline-plot">
-      <svg></svg>
-    </div>
+    <center>
+      <h1>Baseline</h1>
+      <label>Baseline</label>
+      <input type="number" class="baseline-value"></input>
+      <label>Current</label>
+      <input type="number" class="current-value"></input><br/>
+      <button id="update" onclick="updateChart()">Update</button>
+      <div class="baseline-plot">
+        <svg></svg>
+      </div>
+    </center>
   </div>
 </body>
 </html>
