@@ -1,0 +1,41 @@
+<html>
+<head>
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="./bower_components/d3/d3.min.js"></script>
+  <script src="./lib/progress.js"></script>
+  <style>
+    .wrapper {
+      background-color: lightgray;
+    }
+    .progress-plot {
+      height: 60px;
+      width: 600px;
+    }
+
+    .tooltip {
+      position: absolute;
+      text-align: center;
+      padding: 7px;
+      font: 12px sans-serif;
+      font-weight: bold;
+      background: lightsteelblue;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .axis line {
+      stroke-width: 2;
+      stroke: #cccccc;
+      fill: none;
+      shape-rendering: crispEdges;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <center><h1>Progress</h1></center>
+    <div class="progress-plot" data-init-value=30 data-current-value=50 data-target-value=40></div>
+  </div>
+</body>
+</html>
