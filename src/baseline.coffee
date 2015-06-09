@@ -38,7 +38,7 @@ class Baseline
 
         fontSize = 12
         tickFontSize = fontSize / 1.2
-        tickFormat = d3.format('.0f')
+        tickFormat = d3.format('.2r')
         paddedText = fontSize + 5
         linesHeight = availableHeight - paddedText
         baseline = d.baseline
