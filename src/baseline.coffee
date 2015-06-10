@@ -8,6 +8,9 @@ draw = (container, data) ->
   model = new Baseline
   chart = model.build()
 
+  $(".baseline-value, .current-value").keydown (e) ->
+    if (e.keyCode == 13)
+      updateChart()
 
   $(container).empty()
   d3.select(container)
