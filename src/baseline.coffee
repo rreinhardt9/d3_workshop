@@ -28,7 +28,7 @@ class Baseline
 
   build: ->
 
-    margin = {top: 5, right: 15, bottom: 5, left: 15}
+    margin = {top: 5, right: 23, bottom: 5, left: 23}
 
     chart = (selection) ->
       selection.each (d, i) ->
