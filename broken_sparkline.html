@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="./bower_components/d3/d3.min.js"></script>
+  <script src="./bower_components/nvd3/build/nv.d3.min.js"></script>
+  <link href="./bower_components/nvd3/build/nv.d3.min.css" rel="stylesheet" type="text/css">
+
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body {
+            margin: 0px;
+            padding: 0px;
+        }
+        svg.sparkline {
+            width: 75%;
+            height: 70px;
+            font-size: 14px;
+            margin-top: -6px;
+        }
+    </style>
+</head>
+<body class='with-3d-shadow with-transitions'>
+
+<p><svg id="chart1" class="sparkline"></svg></p>
+<p><svg id="chart2" class="sparkline"></svg></p>
+<p><svg id="chart3" class="sparkline"></svg></p>
+
+<script>
+
+    function defaultChartConfig(containerId, data) {
+        nv.addGraph(function() {
+
+            var chart = nv.models.sparklinePlus();
+            chart.margin({left:70})
+                .x(function(d,i) { return i })
+                .showLastValue(true)
+                .xTickFormat(function(d) {
+                    return d3.time.format('%x')(new Date(data[d].x))
+                });
+
+            d3.select(containerId)
+                    .datum(data)
+                    .transition()
+                    .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+    }
+
+    data = [
+      {x: 323452345234, y:5},
+      {x: 323552345234, y:8},
+      {x: 323652345234, y:2}
+    ]
+
+    defaultChartConfig("#chart1",sine());
+    defaultChartConfig("#chart2", volatileChart(130.0, 0.02));
+    defaultChartConfig("#chart3", data);
+
+    function sine() {
+        var sin = [];
+        var now =+new Date();
+
+        for (var i = 0; i < 100; i++) {
+            sin.push({x: now + i * 1000 * 60 * 60 * 24, y: Math.sin(i/10)});
+        }
+
+        return sin;
+    }
+
+    function volatileChart(startPrice, volatility, numPoints) {
+        var rval =  [];
+        var now =+new Date();
+        numPoints = numPoints || 100;
+        for(var i = 1; i < numPoints; i++) {
+
+            rval.push({x: now + i * 1000 * 60 * 60 * 24, y: startPrice});
+            var rnd = Math.random();
+            var changePct = 2 * volatility * rnd;
+            if ( changePct > volatility) {
+                changePct -= (2*volatility);
+            }
+            startPrice = startPrice + startPrice * changePct;
+        }
+        return rval;
+    }
+
+</script>
+</body>
+</html>
